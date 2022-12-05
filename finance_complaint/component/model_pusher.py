@@ -5,7 +5,7 @@ from finance_complaint.logger import logger
 from finance_complaint.entity.config_entity import ModelPusherConfig
 from finance_complaint.entity.artifact_entity import ModelPusherArtifact, ModelTrainerArtifact
 from pyspark.ml.pipeline import PipelineModel
-from finance_complaint.entity.estimator import S3FinanceEstimator
+from finance_complaint.ml.estimator import S3FinanceEstimator
 import os
 
 

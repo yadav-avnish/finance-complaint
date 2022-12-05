@@ -1,9 +1,8 @@
 from finance_complaint.constant.environment.variable_key import AWS_ACCESS_KEY_ID_ENV_KEY,AWS_SECRET_ACCESS_KEY_ENV_KEY
-
+from finance_complaint.constant import env_var
 import os
 from pyspark.sql import SparkSession
-access_key_id = os.getenv(AWS_ACCESS_KEY_ID_ENV_KEY, )
-secret_access_key = os.getenv(AWS_SECRET_ACCESS_KEY_ENV_KEY, )
+
 #
 # spark = SparkSession.builder.master('local[*]').appName('finance_complaint') .getOrCreate()
 # hadoop_conf = spark._jsc.hadoopConfiguration()
@@ -26,8 +25,8 @@ spark_session = SparkSession.builder.master('local[*]').appName('finance_complai
     
 
 
-spark_session._jsc.hadoopConfiguration().set("fs.s3a.awsAccessKeyId", access_key_id)
-spark_session._jsc.hadoopConfiguration().set("fs.s3a.awsSecretAccessKey", secret_access_key)
+spark_session._jsc.hadoopConfiguration().set("fs.s3a.awsAccessKeyId", env_var.aws_access_key_id)
+spark_session._jsc.hadoopConfiguration().set("fs.s3a.awsSecretAccessKey", env_var.aws_secret_access_key)
 spark_session._jsc.hadoopConfiguration().set("fs.s3a.impl","org.apache.hadoop.fs.s3a.S3AFileSystem")
 spark_session._jsc.hadoopConfiguration().set("fs.s3a.impl","org.apache.hadoop.fs.s3native.NativeS3FileSystem")
 spark_session._jsc.hadoopConfiguration().set("com.amazonaws.services.s3.enableV4", "true")
