@@ -1,6 +1,6 @@
 from finance_complaint.exception import FinanceException
 from finance_complaint.logger import logger
-from finance_complaint.config.pipeline.training import FinanceConfig
+from finance_complaint.entity.config_entity import TrainingPipelineConfig
 from finance_complaint.component import DataIngestion, DataValidation, DataTransformation, ModelTrainer, \
     ModelEvaluation, \
     ModelPusher
@@ -12,7 +12,7 @@ import sys
 
 class TrainingPipeline:
 
-    def __init__(self, finance_config: FinanceConfig):
+    def __init__(self, finance_config: TrainingPipelineConfig):
         self.finance_config: FinanceConfig = finance_config
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
