@@ -159,8 +159,8 @@ class ModelEvaluationConfig:
                 MODEL_EVALUATION_REPORT_FILE_NAME
             )
 
-        self.threshold=MODEL_EVALUATION_THRESHOLD_VALUE,
-        self.metric_list=MODEL_EVALUATION_METRIC_NAMES,
+        self.threshold=MODEL_EVALUATION_THRESHOLD_VALUE
+        self.metric_list=MODEL_EVALUATION_METRIC_NAMES
 
 class ModelPusherConfig:
 
