@@ -41,7 +41,7 @@ def main(training_status, prediction_status):
 if __name__ == "__main__":
     try:
         parser = argparse.ArgumentParser()
-        parser.add_argument("--t", default=0, type=int, help="If provided true training will be done else not")
+        parser.add_argument("--t", default=1, type=int, help="If provided true training will be done else not")
         parser.add_argument("--p", default=0, type=int, help="If provided prediction will be done else not")
 
         args = parser.parse_args()

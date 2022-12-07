@@ -24,9 +24,9 @@ class ModelResolver:
 
     @property
     def is_model_present(self)->bool:
-        if not self.get_best_model_path:
-            return False
-        return True
+        if self.get_best_model_path():
+            return True
+        return False
 
     @property
     def get_save_model_path(self)->bool:

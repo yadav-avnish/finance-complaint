@@ -19,7 +19,7 @@ class ModelPusher:
     def push_model(self) -> str:
         try:
             trained_model_path=self.model_trainer_artifact.model_trainer_ref_artifact.trained_model_file_path
-            saved_model_path = self.model_resolver.get_save_model_path()
+            saved_model_path = self.model_resolver.get_save_model_path
             model = PipelineModel.load(trained_model_path)
             model.save(saved_model_path)
             model.save(self.model_pusher_config.pusher_model_dir)

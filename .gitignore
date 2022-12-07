@@ -7,7 +7,7 @@ airflow/airflow.db
 airflow/webserver_config.py 
 airlfow/airflow.cfg
 finance-complaint
-
+artifact
 .vscode
 # C extensions
 .terraform.lock.hcl

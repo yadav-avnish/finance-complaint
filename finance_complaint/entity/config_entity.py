@@ -63,7 +63,7 @@ MODEL_PUSHER_MODEL_NAME = MODEL_TRAINER_MODEL_NAME
 
 @dataclass
 class TrainingPipelineConfig:
-    pipeline_name:str="finance-complaint"
+    pipeline_name:str="artifact"
     artifact_dir:str = os.path.join(pipeline_name,TIMESTAMP)
 
 
@@ -83,8 +83,7 @@ class DataIngestionConfig:
             master directory for data ingestion
             we will store metadata information and ingested file to avoid redundant download
             """
-            data_ingestion_master_dir = os.path.join(training_pipeline_config.artifact_dir,
-                                                     DATA_INGESTION_DIR)
+            data_ingestion_master_dir = os.path.join(os.path.dirname(training_pipeline_config.artifact_dir),DATA_INGESTION_DIR)
 
             # time based directory for each run
             self.data_ingestion_dir = os.path.join(data_ingestion_master_dir,
@@ -123,7 +122,7 @@ class DataTransformationConfig:
 
     def __init__(self,training_pipeline_config:TrainingPipelineConfig) -> None:
         try:
-            data_transformation_dir = os.path.join(self.pipeline_config.artifact_dir,
+            data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir,
                                                        DATA_TRANSFORMATION_DIR)
 
             self.transformed_train_dir = os.path.join( data_transformation_dir, DATA_TRANSFORMATION_TRAIN_DIR)
@@ -137,7 +136,7 @@ class DataTransformationConfig:
 class ModelTrainerConfig:
 
     def __init__(self,training_pipeline_config:TrainingPipelineConfig) -> None:
-        model_trainer_dir = os.path.join(self.pipeline_config.artifact_dir,
+        model_trainer_dir = os.path.join(training_pipeline_config.artifact_dir,
                                              MODEL_TRAINER_DIR)
         self.trained_model_file_path = os.path.join(model_trainer_dir, 
         MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_TRAINER_MODEL_NAME)
