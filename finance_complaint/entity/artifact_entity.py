@@ -1,22 +1,41 @@
 from collections import namedtuple
 from datetime import datetime
+from dataclasses import dataclass
 
-DataIngestionArtifact = namedtuple("DataIngestionArtifact",
-                                   ["feature_store_file_path", "metadata_file_path", "download_dir"])
-DataValidationArtifact = namedtuple("DataValidationArtifact", ["accepted_file_path", "rejected_dir"])
-DataTransformationArtifact = namedtuple("DataTransformationArtifact",
-                                        ["transformed_train_file_path", "exported_pipeline_file_path",
-                                         "transformed_test_file_path",
+@dataclass
+class DataIngestionArtifact:
+    feature_store_file_path:str
+    metadata_file_path:str
+    download_dir:str
 
-                                         ])
+@dataclass
+class DataValidationArtifact:
+    accepted_file_path:str
+    rejected_dir:str
 
-PartialModelTrainerRefArtifact = namedtuple("PartialModelTrainerRefArtifact", ["trained_model_file_path",
-                                                                               "label_indexer_model_file_path"
-                                                                               ])
+@dataclass
+class DataTransformationArtifact:
+    transformed_train_file_path:str
+    exported_pipeline_file_path:str
+    transformed_test_file_path:str
 
-PartialModelTrainerMetricArtifact = namedtuple("PartialModelTrainerMetricArtifact", [
-    "f1_score", "precision_score", "recall_score"
-])
+@dataclass
+class PartialModelTrainerRefArtifact:
+    trained_model_file_path:str
+    label_indexer_model_file_path:str
+
+    def _asdict(self):
+        return self.__dict__
+
+@dataclass
+class PartialModelTrainerMetricArtifact:
+    f1_score:float
+    precision_score:float
+    recall_score:float
+
+    def _asdict(self):
+        return self.__dict__
+
 
 
 class ModelTrainerArtifact:
@@ -48,9 +67,9 @@ class ModelTrainerArtifact:
         except Exception as e:
             raise e
 
-
-ModelPusherArtifact = namedtuple("ModelEvaluationArtifact", ["model_pushed_dir"])
-
+@dataclass
+class ModelPusherArtifact:
+    model_pushed_dir:str
 
 class ModelEvaluationArtifact:
 

@@ -1,11 +1,11 @@
-from statistics import mode
+
 from finance_complaint.exception import FinanceException
 import sys
 from finance_complaint.logger import logger
 from finance_complaint.entity.config_entity import ModelPusherConfig
 from finance_complaint.entity.artifact_entity import ModelPusherArtifact, ModelTrainerArtifact
+from finance_complaint.ml.estimator import ModelResolver
 from pyspark.ml.pipeline import PipelineModel
-from finance_complaint.ml.estimator import S3FinanceEstimator
 import os
 
 
@@ -14,18 +14,16 @@ class ModelPusher:
     def __init__(self, model_trainer_artifact: ModelTrainerArtifact, model_pusher_config: ModelPusherConfig):
         self.model_trainer_artifact = model_trainer_artifact
         self.model_pusher_config = model_pusher_config
+        self.model_resolver = ModelResolver(model_dir=self.model_pusher_config.saved_model_dir)
 
     def push_model(self) -> str:
         try:
-            model_registry = S3FinanceEstimator(bucket_name=self.model_pusher_config.bucket_name,s3_key=self.model_pusher_config.model_dir)
-            model_file_path = self.model_trainer_artifact.model_trainer_ref_artifact.trained_model_file_path
-            model_registry.save(model_dir=os.path.dirname(model_file_path),
-                                key=self.model_pusher_config.model_dir
-                                )
-            # model = PipelineModel.load(self.model_trainer_artifact.model_trainer_ref_artifact.trained_model_file_path)
-            # pushed_dir = self.model_pusher_config.model_dir
-            # model.save(pushed_dir)
-            return model_registry.get_latest_model_path()
+            trained_model_path=self.model_trainer_artifact.model_trainer_ref_artifact.trained_model_file_path
+            saved_model_path = self.model_resolver.get_save_model_path()
+            model = PipelineModel.load(trained_model_path)
+            model.save(saved_model_path)
+            model.save(self.model_pusher_config.pusher_model_dir)
+            return saved_model_path
         except Exception as e:
             raise FinanceException(e, sys)
 

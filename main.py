@@ -1,7 +1,7 @@
 import os
 import argparse
 from finance_complaint.exception import FinanceException
-from finance_complaint.pipeline import TrainingPipeline, PredictionPipeline
+from finance_complaint.pipeline import TrainingPipeline
 from finance_complaint.logger import logger
 from finance_complaint.entity.config_entity import TrainingPipelineConfig
 import sys
